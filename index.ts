@@ -17,13 +17,9 @@ const decrypt = (encrypted: string) => {
   return decipher.final("utf8");
 };
 
-const content = "Hello Node.js";
+const content = "I loved you!";
 const crypted = encrypt(content);
 console.log(crypted);
 
-// db75f3e9e78fba0401ca82527a0bbd62
-
 const decrypted = decrypt(crypted);
 console.log(decrypted);
-
-// Hello Node.js
