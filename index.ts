@@ -1,25 +1,29 @@
+//Checking the crypto module
 import crypto from "crypto";
+const algorithm = "aes-256-cbc"; //Using AES encryption
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
 
-const key = crypto.randomBytes(192 / 8);
-const iv = crypto.randomBytes(128 / 8);
-const algorithm = "aes192";
-const encoding = "hex";
+//Encrypting text
+function encrypt(text: string) {
+  let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+  let encrypted = cipher.update(text);
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return { iv: iv.toString("hex"), encryptedData: encrypted.toString("hex") };
+}
 
-const encrypt = (text: string) => {
-  const cipher = crypto.createCipheriv(algorithm, key, iv);
-  cipher.update(text);
-  return cipher.final(encoding);
-};
+// Decrypting text
+function decrypt(text: { iv: string; encryptedData: string }) {
+  let iv = Buffer.from(text.iv, "hex");
+  let encryptedText = Buffer.from(text.encryptedData, "hex");
+  let decipher = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+}
 
-const decrypt = (encrypted: string) => {
-  const decipher = crypto.createDecipheriv(algorithm, key, iv);
-  decipher.update(encrypted, encoding);
-  return decipher.final("utf8");
-};
-
-const content = "I loved you!";
-const crypted = encrypt(content);
-console.log(crypted);
-
-const decrypted = decrypt(crypted);
-console.log(decrypted);
+// Text send to encrypt function
+var hw = encrypt("LALALAAL");
+console.log(hw);
+console.log(hw);
+console.log(decrypt(hw));
