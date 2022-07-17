@@ -3,9 +3,9 @@ import crypto from "crypto";
 const key = crypto.randomBytes(192 / 8);
 const iv = crypto.randomBytes(128 / 8);
 const algorithm = "aes192";
-const encoding = "binary";
+const encoding = "hex";
 
-const encrypt = (text: any) => {
+const encrypt = (text: string) => {
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   cipher.update(text);
   return cipher.final(encoding);
@@ -17,13 +17,13 @@ const decrypt = (encrypted: string) => {
   return decipher.final("utf8");
 };
 
-const content = Buffer.from(JSON.stringify({ address: "aaaa", nonce: 123 }));
+const content = "Hello Node.js";
 const crypted = encrypt(content);
 console.log(crypted);
 
-// b69a6b6ebceb1a64f21434e9185a9e0a
+// db75f3e9e78fba0401ca82527a0bbd62
 
 const decrypted = decrypt(crypted);
 console.log(decrypted);
 
-// I loved you!
+// Hello Node.js
