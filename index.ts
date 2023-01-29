@@ -1,29 +1,29 @@
-//Checking the crypto module
 import crypto from "crypto";
-const algorithm = "aes-256-cbc"; //Using AES encryption
-const key = crypto.randomBytes(32);
-const iv = crypto.randomBytes(16);
 
-//Encrypting text
-function encrypt(text: string) {
-  let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-  let encrypted = cipher.update(text);
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return { iv: iv.toString("hex"), encryptedData: encrypted.toString("hex") };
-}
+const algorithm = "SHA256";
 
-// Decrypting text
-function decrypt(text: { iv: string; encryptedData: string }) {
-  let iv = Buffer.from(text.iv, "hex");
-  let encryptedText = Buffer.from(text.encryptedData, "hex");
-  let decipher = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
-  let decrypted = decipher.update(encryptedText);
-  decrypted = Buffer.concat([decrypted, decipher.final()]);
-  return decrypted.toString();
-}
+// Create a private key
+const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+  modulusLength: 2048,
+});
 
-// Text send to encrypt function
-var hw = encrypt("LALALAAL");
-console.log(hw);
-console.log(hw);
-console.log(decrypt(hw));
+// Convert string to buffer
+const data = Buffer.from("0xf4b3776934B012CEe7317171b1BA1A0BfdAA51e6");
+
+// Sign the data and returned signature in buffer
+const sign = crypto.sign(algorithm, data, privateKey);
+console.log(sign, "A");
+
+// Convert returned buffer to base64
+const signature = sign.toString("base64");
+
+// Printing the signature
+console.log(`Signature:\n\n ${signature}`);
+
+console.log(Buffer.from(signature, "base64"), "B");
+
+// Verifying signature using crypto.verify() function
+const isVerified = crypto.verify(algorithm, data, publicKey, sign);
+
+// Printing the result
+console.log(`Is signature verified: ${isVerified}`);
