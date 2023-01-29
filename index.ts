@@ -37,6 +37,7 @@ console.log("-------------Decrypted Data-------------\n", decryptedData, "\n");
 
 const generateKeyPair = async () => {
   const { publicKey, privateKey }: KeyPair = await makeKeyPair();
+
   // Encrypt
   const encryptedDataWithPublicKey = publicKey.encrypt(
     "Royal",
