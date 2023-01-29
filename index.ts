@@ -1,9 +1,9 @@
 import fs from "fs";
 import {
-  getPublicKeyFromPem,
   getPrivateKeyFromPem,
-  makeKeyPair,
+  getPublicKeyFromPem,
   KeyPair,
+  makeKeyPair,
 } from "./crypto.util";
 
 // Solution 1: Create public/private keys pair via openssl
