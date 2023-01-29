@@ -1,15 +1,15 @@
 import forge from "node-forge";
 
+const PKI = forge.pki;
+const RSA = forge.pki.rsa;
+const MD = forge.md;
+
 export type PublicKey = forge.pki.PublicKey;
 export type PrivateKey = forge.pki.PrivateKey;
 export type RSAPrivateKey = forge.pki.rsa.PrivateKey;
 export type RSAPublicKey = forge.pki.rsa.PublicKey;
 export type GenerateKeyPairOptions = forge.pki.rsa.GenerateKeyPairOptions;
 export type KeyPair = forge.pki.rsa.KeyPair;
-
-const PKI = forge.pki;
-const RSA = forge.pki.rsa;
-const MD = forge.md;
 
 export const generateKeyPair = (
   opts: GenerateKeyPairOptions
