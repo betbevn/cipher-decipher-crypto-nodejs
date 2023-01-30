@@ -6,7 +6,7 @@ import {
   makeKeyPair,
 } from "./crypto.util";
 
-// Solution 1: Create public/private keys pair via openssl
+// Way 1: Create public/private keys pair via openssl
 
 // First: Generate private key: openssl ecparam -name prime256v1 -genkey -noout -out private.pem
 // After: Generate public key: openssl ec -in private.pem -pubout -out public.pem
@@ -33,7 +33,7 @@ console.log("-------------Private Key-------------\n", privateKeyFromPem, "\n");
 console.log("-------------Decrypted Data-------------\n", decryptedData, "\n");
 // --------------------------------------------------------------------------------------//
 
-// Solution 2: create public/private keys pair via "node-forge" module
+// Way 2: create public/private keys pair via "node-forge" module
 
 const generateKeyPair = async () => {
   const { publicKey, privateKey }: KeyPair = await makeKeyPair();
